@@ -90,3 +90,5 @@ Feel free to fork, modify, or improve ⬆️
 ---
 
 Let me know if you'd like help adding examples or badges for further flair!
+
+<h3 align="center" > <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30" height="30" style="margin-right: 10px;">Connect with me 🤝 </h3>
