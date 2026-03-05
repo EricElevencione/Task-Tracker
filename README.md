@@ -89,4 +89,4 @@ Feel free to fork, modify, or improve ⬆️
 
 ---
 
-<div align="center"><a ![Programming](https://media.giphy.com/media/78XCFBGOlS6keY1Bil/giphy.gif)></a></div>
+![Programming](https://media.giphy.com/media/78XCFBGOlS6keY1Bil/giphy.gif)
