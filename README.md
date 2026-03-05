@@ -89,6 +89,4 @@ Feel free to fork, modify, or improve ⬆️
 
 ---
 
-Let me know if you'd like help adding examples or badges for further flair!
-
-![Programming](https://media.giphy.com/media/78XCFBGOlS6keY1Bil/giphy.gif)
+<div align="center"><a ![Programming](https://media.giphy.com/media/78XCFBGOlS6keY1Bil/giphy.gif)></a></div>
