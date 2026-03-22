@@ -1,0 +1,14 @@
+{
+  "name": "task-tracker",
+  "version": "1.0.0",
+  "description": "CLI Task Tracker - roadmap.sh project",
+  "main": "task.js",
+  "scripts": {
+    "build": "tsc task.ts",
+    "start": "node task.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5"
+  }
+}

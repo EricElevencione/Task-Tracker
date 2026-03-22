@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let task = "Add Task";
+
+      let allTask = [];
+
+      let keepGoing = true;
+
+      // How to make the task function don't stop asking question until the user stop?
+
+      while (keepGoing) {
+        task = prompt("Add new task: ") || "";
+
+        if (task == "") {
+          console.log("You Stop adding task");
+          keepGoing = false;
+        } else {
+          allTask.push(task);
+
+          console.log(`All task added are: ${task} `);
+        }
+      }
+
+      console.log("=========================");
+      console.log("Here are ALL your tasks:");
+      console.log(allTask);
+      console.log("=========================");
+    </script>
+  </body>
+</html>
