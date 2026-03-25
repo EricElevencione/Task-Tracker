@@ -49,7 +49,7 @@ function mainMenu() {
             addTask();
         }
         else if (answer === "2") {
-            updateTask(parseInt(answer), answer);
+            updateTask();
         }
         else if (answer === "3") {
             deleteTask(parseInt(answer));
@@ -92,17 +92,24 @@ function addTask() {
         mainMenu();
     });
 }
-function updateTask(id, description) {
-    var tasks = loadTasks();
-    var task = tasks.find(function (t) { return t.id === id; });
-    if (!task) {
-        console.error("\u274C No task found with ID ".concat(id, "."));
-        process.exit(1);
-    }
-    task.description = description;
-    task.updatedAt = new Date().toISOString();
-    saveTasks(tasks);
-    console.log("\u270F\uFE0F  Task ".concat(id, " updated: \"").concat(description, "\""));
+function updateTask() {
+    console.log(listTasks()); // Show all tasks to help user choose which one to update
+    rl.question("Enter the ID of the task to update: ", function (idInput) {
+        rl.question("Enter the new description: ", function (description) {
+            var id = parseInt(idInput);
+            var tasks = loadTasks();
+            var task = tasks.find(function (t) { return t.id === id; });
+            if (!task) {
+                console.error("\u274C No task found with ID ".concat(id, "."));
+                process.exit(1);
+            }
+            task.description = description;
+            task.updatedAt = new Date().toISOString();
+            saveTasks(tasks);
+            console.log("\u270F\uFE0F  Task ".concat(id, " updated: \"").concat(description, "\""));
+            mainMenu();
+        });
+    });
 }
 function deleteTask(id) {
     var tasks = loadTasks();

@@ -61,7 +61,7 @@ function mainMenu() {
     } else if (answer === "1") {
       addTask();
     } else if (answer === "2") {
-      updateTask(parseInt(answer), answer);
+      updateTask();
     } else if (answer === "3") {
       deleteTask(parseInt(answer));
     } else if (answer === "4") {
@@ -101,17 +101,26 @@ function addTask(): void {
   });
 }
 
-function updateTask(id: number, description: string): void {
-  const tasks = loadTasks();
-  const task = tasks.find((t) => t.id === id);
-  if (!task) {
-    console.error(`❌ No task found with ID ${id}.`);
-    process.exit(1);
-  }
-  task.description = description;
-  task.updatedAt = new Date().toISOString();
-  saveTasks(tasks);
-  console.log(`✏️  Task ${id} updated: "${description}"`);
+function updateTask(): void {
+  console.log(listTasks()); // Show all tasks to help user choose which one to update
+
+  rl.question("Enter the ID of the task to update: ", (idInput) => {
+    rl.question("Enter the new description: ", (description) => {
+      const id = parseInt(idInput);
+
+      const tasks = loadTasks();
+      const task = tasks.find((t) => t.id === id);
+      if (!task) {
+        console.error(`❌ No task found with ID ${id}.`);
+        process.exit(1);
+      }
+      task.description = description;
+      task.updatedAt = new Date().toISOString();
+      saveTasks(tasks);
+      console.log(`✏️  Task ${id} updated: "${description}"`);
+      mainMenu();
+    });
+  });
 }
 
 function deleteTask(id: number): void {
