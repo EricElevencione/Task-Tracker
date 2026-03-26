@@ -70,6 +70,7 @@ function mainMenu() {
       markTask(parseInt(answer), "done");
     } else if (answer === "6") {
       listTasks();
+      mainMenu();
     } else if (answer === "7") {
       printHelp();
     } else {
@@ -124,29 +125,47 @@ function updateTask(): void {
 }
 
 function deleteTask(id: number): void {
-  const tasks = loadTasks();
-  const index = tasks.findIndex((t) => t.id === id);
-  if (index === -1) {
-    console.error(`❌ No task found with ID ${id}.`);
-    process.exit(1);
-  }
-  const [removed] = tasks.splice(index, 1);
-  saveTasks(tasks);
-  console.log(`🗑️  Task ${id} deleted: "${removed.description}"`);
+  console.log(listTasks());
+
+  rl.question("Enter the ID of the task to delete: ", (idInput) => {
+    const id = parseInt(idInput);
+
+    const tasks = loadTasks();
+    const index = tasks.findIndex((t) => t.id === id);
+    if (index === -1) {
+      console.error(`❌ No task found with ID ${id}.`);
+      process.exit(1);
+    }
+    const [removed] = tasks.splice(index, 1);
+    saveTasks(tasks);
+    console.log(`🗑️  Task ${id} deleted: "${removed.description}"`);
+    mainMenu();
+  });
 }
 
 function markTask(id: number, status: Task["status"]): void {
-  const tasks = loadTasks();
-  const task = tasks.find((t) => t.id === id);
-  if (!task) {
-    console.error(`❌ No task found with ID ${id}.`);
-    process.exit(1);
-  }
-  task.status = status;
-  task.updatedAt = new Date().toISOString();
-  saveTasks(tasks);
-  const icon = status === "done" ? "✅" : "🔄";
-  console.log(`${icon} Task ${id} marked as "${status}".`);
+  listTasks();
+
+  rl.question(
+    `Enter the ID of the task to mark as "${status}": `,
+    (idInput) => {
+      const id = parseInt(idInput);
+
+      const tasks = loadTasks();
+      const task = tasks.find((t) => t.id === id);
+      if (!task) {
+        console.error(`❌ No task found with ID ${id}.`);
+        process.exit(1);
+      }
+      task.status = status;
+      task.updatedAt = new Date().toISOString();
+      saveTasks(tasks);
+      const icon = status === "done" ? "✅" : "🔄";
+      console.log(`${icon} Task ${id} marked as "${status}".`);
+
+      mainMenu();
+    },
+  );
 }
 
 function listTasks(filter?: Task["status"]): void {

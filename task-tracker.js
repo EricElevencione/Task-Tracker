@@ -62,6 +62,7 @@ function mainMenu() {
         }
         else if (answer === "6") {
             listTasks();
+            mainMenu();
         }
         else if (answer === "7") {
             printHelp();
@@ -112,28 +113,38 @@ function updateTask() {
     });
 }
 function deleteTask(id) {
-    var tasks = loadTasks();
-    var index = tasks.findIndex(function (t) { return t.id === id; });
-    if (index === -1) {
-        console.error("\u274C No task found with ID ".concat(id, "."));
-        process.exit(1);
-    }
-    var removed = tasks.splice(index, 1)[0];
-    saveTasks(tasks);
-    console.log("\uD83D\uDDD1\uFE0F  Task ".concat(id, " deleted: \"").concat(removed.description, "\""));
+    console.log(listTasks());
+    rl.question("Enter the ID of the task to delete: ", function (idInput) {
+        var id = parseInt(idInput);
+        var tasks = loadTasks();
+        var index = tasks.findIndex(function (t) { return t.id === id; });
+        if (index === -1) {
+            console.error("\u274C No task found with ID ".concat(id, "."));
+            process.exit(1);
+        }
+        var removed = tasks.splice(index, 1)[0];
+        saveTasks(tasks);
+        console.log("\uD83D\uDDD1\uFE0F  Task ".concat(id, " deleted: \"").concat(removed.description, "\""));
+        mainMenu();
+    });
 }
 function markTask(id, status) {
-    var tasks = loadTasks();
-    var task = tasks.find(function (t) { return t.id === id; });
-    if (!task) {
-        console.error("\u274C No task found with ID ".concat(id, "."));
-        process.exit(1);
-    }
-    task.status = status;
-    task.updatedAt = new Date().toISOString();
-    saveTasks(tasks);
-    var icon = status === "done" ? "✅" : "🔄";
-    console.log("".concat(icon, " Task ").concat(id, " marked as \"").concat(status, "\"."));
+    listTasks();
+    rl.question("Enter the ID of the task to mark as \"".concat(status, "\": "), function (idInput) {
+        var id = parseInt(idInput);
+        var tasks = loadTasks();
+        var task = tasks.find(function (t) { return t.id === id; });
+        if (!task) {
+            console.error("\u274C No task found with ID ".concat(id, "."));
+            process.exit(1);
+        }
+        task.status = status;
+        task.updatedAt = new Date().toISOString();
+        saveTasks(tasks);
+        var icon = status === "done" ? "✅" : "🔄";
+        console.log("".concat(icon, " Task ").concat(id, " marked as \"").concat(status, "\"."));
+        mainMenu();
+    });
 }
 function listTasks(filter) {
     var tasks = loadTasks();
